@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medico Clinical Reasoning</title>
+</head>
+
+<body>
+
+    <h1>Medico Clinical Reasoning</h1>
+
+    <p>Enter the patient's clinical history.</p>
+
+    <textarea id="history" rows="15" cols="80" placeholder="Enter patient history here..."></textarea>
+
+    <br><br>
+
+    <button onclick="analyseCase()">Analyse Case</button>
+
+    <h2>Clinical Reasoning</h2>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function analyseCase() {
+
+            const history = document.getElementById("history").value;
+            const resultBox = document.getElementById("result");
+
+            if (!history.trim()) {
+                resultBox.textContent = "Please enter the patient's history.";
+                return;
+            }
+
+            resultBox.textContent = "Analysing...";
+
+            try {
+
+                const response = await fetch("/analyse", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        history: history
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    resultBox.textContent = "Error: " + data.error;
+                } else {
+                    resultBox.textContent = data.result;
+                }
+
+            } catch (error) {
+
+                resultBox.textContent =
+                    "Something went wrong: " + error.message;
+
+            }
+        }
+    </script>
+
+</body>
+
+</html>
