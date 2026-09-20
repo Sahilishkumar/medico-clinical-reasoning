@@ -1,0 +1,8 @@
+Flask
+google-genai
+python-dotenv
+gunicorn==23.0.0
+pypdf
+fonttools
+langchain-text-splitters
+chromadb
