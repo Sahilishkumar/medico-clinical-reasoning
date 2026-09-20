@@ -28,7 +28,8 @@
             const resultBox = document.getElementById("result");
 
             if (!history.trim()) {
-                resultBox.textContent = "Please enter the patient's history.";
+                resultBox.textContent =
+                    "Please enter the patient's history.";
                 return;
             }
 
@@ -46,19 +47,38 @@
                     })
                 });
 
-                const data = await response.json();
+                const text = await response.text();
 
-                if (data.error) {
-                    resultBox.textContent = "Error: " + data.error;
-                } else {
-                    resultBox.textContent = data.result;
+                console.log("SERVER RESPONSE:", text);
+
+                if (!response.ok) {
+                    resultBox.textContent =
+                        "Server error:\n\n" + text;
+                    return;
+                }
+
+                try {
+
+                    const data = JSON.parse(text);
+
+                    if (data.error) {
+                        resultBox.textContent =
+                            "Error: " + data.error;
+                    } else {
+                        resultBox.textContent =
+                            data.result;
+                    }
+
+                } catch (error) {
+
+                    resultBox.textContent =
+                        "Invalid server response:\n\n" + text;
                 }
 
             } catch (error) {
 
                 resultBox.textContent =
-                    "Something went wrong: " + error.message;
-
+                    "Connection error:\n\n" + error.message;
             }
         }
     </script>
