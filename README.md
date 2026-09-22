@@ -12,17 +12,17 @@ The system retrieves relevant information from medical books based on the patien
 
 # Workflow
 Patient History & Symptoms
-          ↓
+          ->
      Query Processing
-          ↓
+          ->
    Relevant Book Retrieval
-          ↓
+          ->
    Medical Knowledge Context
-          ↓
+          ->
         LLM Analysis
-          ↓
+          ->
 Probable Disease + Reasoning
-          ↓
+          ->
      Supporting References
 
 
